@@ -1,9 +1,12 @@
 const userSQL = {
-  insert: 'INSERT INTO front_list(name,work) VALUES(?,?)',
-  queryALL: 'SELECT * FROM front_list',
-  getWorkByName: 'SELECT * FROM front_list WHERE name = ?',
-  getWorkInfo: 'SELECT work FROM front_works',
-  getAllInfo: 'select front_name.name,front_works.work from front_task left join front_name on front_task.name = front_name.id left join front_works on front_task.work = front_works.id order by front_name.id',
+  insert: 'INSERT INTO f_list(name,work) VALUES(?,?)',
+  queryALL: 'SELECT * FROM f_list',
+  getUserInfo: 'SELECT * FROM f_name',
+  setUserInfo: 'UPDATE f_name SET name = ? WHERE id = ?',
+  getWorkInfo: 'SELECT * FROM f_works',
+  setWorkInfo: 'UPDATE f_works SET work = ? WHERE id = ?',
+  getAllInfo: 'select f_name.name,f_works.work from f_task left join f_name on f_task.name = f_name.id left join f_works on f_task.work = f_works.id order by f_name.id',
+  setTask: 'UPDATE f_task SET name = ? WHERE work = ?',
 }
 
 module.exports = userSQL;

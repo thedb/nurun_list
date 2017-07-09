@@ -3,14 +3,17 @@
     <h1 v-html="msg"></h1>
     <div class="container">
       <div>
-        <span>添加姓名：</span>
-        <input type="text" v-model="userName">
+        <span>选择员工：</span>
+        <select v-model="userName">
+            <option disabled value="">请选择</option>
+            <option v-for="(v,k) in userInfo" v-bind:value="userInfo[k].id">{{userInfo[k].name}}</option>
+        </select>
       </div>
       <div>
-        <span>添加工作：</span>
+        <span>选择工作：</span>
         <select v-model="userWork">
             <option disabled value="">请选择</option>
-            <option v-for="(v,k) in workInfo">{{workInfo[k].work}}</option>
+            <option v-for="(v,k) in workInfo" v-bind:value="workInfo[k].id">{{workInfo[k].work}}</option>
         </select>
       </div>
       <div class="submint" @click="addUsers">提交</div>
@@ -31,6 +34,7 @@ export default {
     }
   },
   created () {
+    this.$parent.loading = false
     this.$axios({
       method: 'post',
       url: '/api',
@@ -41,19 +45,34 @@ export default {
     .then((res) => {
       let result = res.data
       this.workInfo = result.data
-      console.log(this.workInfo)
+      // console.log(this.workInfo)
+    })
+
+    this.$axios({
+      method: 'post',
+      url: '/api',
+      data: {
+        'action': 'find_name'
+      }
+    })
+    .then((res) => {
+      let result = res.data
+      this.userInfo = result.data
+      // console.log(this.workInfo)
       // this.userInfo = result.data
     })
   },
   methods: {
     addUsers () {
+      // console.log(this.userName)
+      // console.log(this.userWork)
       this.$axios({
         method: 'post',
         url: '/api',
         data: {
-          'action': 'addUsers',
-          'name': this.userName,
-          'work': this.userWork
+          'action': 'set_task',
+          'name': parseInt(this.userName),
+          'work': parseInt(this.userWork)
         }
       })
       .then((res) => {

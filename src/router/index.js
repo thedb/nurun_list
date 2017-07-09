@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
-import add from '@/components/add'
+import task from '@/components/task'
+import addTask from '@/components/addTask'
+import employeeInfo from '@/components/employeeInfo'
+import workInfo from '@/components/workInfo'
 import info1 from '@/components/info1'
 import info2 from '@/components/info2'
 
@@ -11,13 +13,23 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      name: 'task',
+      component: task
     },
     {
-      path: '/add',
-      name: 'add',
-      component: add
+      path: '/addTask',
+      name: 'addTask',
+      component: addTask
+    },
+    {
+      path: '/employeeInfo',
+      name: 'front_employee',
+      component: employeeInfo
+    },
+    {
+      path: '/workInfo',
+      name: 'front_work',
+      component: workInfo
     },
     {
       path: '/info1',

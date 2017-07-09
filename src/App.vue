@@ -1,9 +1,14 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
-    <!-- <router-link to="/info1">info1</router-link>
-    <router-link to="/info2">info2</router-link> -->
+    <div class="loading" v-show="loading"><span>loading..</span></div>
+    <img src="./assets/logo.png"><br>
+    <router-link to="/">首页</router-link>
+    <router-link to="/employeeInfo">员工信息</router-link>
+    <router-link to="/workInfo">工作信息</router-link>
+    <router-link to="/addTask">工作分配</router-link>
+    <transition name="ani" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -12,6 +17,7 @@ export default {
   name: 'app',
   data () {
     return {
+      loading: true
     }
   },
   method: {
@@ -22,7 +28,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 body,html{
   width: 100%;
   height: 100%;
@@ -36,5 +42,30 @@ body,html{
   color: #2c3e50;
   width: 100%;
   height: 100%;
+  .loading{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom:0;
+    display: flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+    font-size: 28px;
+    background-color: #ddd;
+    opacity: 0.8;
+  }
+}
+.ani-enter-active, .ani-leave-active {
+  transition: all 0.5s ease-in-out;
+}
+.ani-enter{
+  transform: translateX(-100%)
+}
+.ani-leave-to{
+  transform: translateX(100%)
 }
 </style>

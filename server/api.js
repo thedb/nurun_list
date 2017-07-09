@@ -45,7 +45,7 @@ router.post('/', function(req, res, next) {
               i.work = [i.work];
               return i;
             }
-        }).filter(item=>item!==undefined);
+        }).filter(item => item!==undefined);
         var response = {
           result: '1',
           data: result
@@ -55,10 +55,67 @@ router.post('/', function(req, res, next) {
     }
 
     /*接口：
-      查询所有工作信息
+      修改员工工作信息
+    */
+    if(param.action == 'set_task'){
+      connection.query(userSQL.setTask,[parseInt(param.name),parseInt(param.work)],(err,result) => {
+        // console.log(err);
+        console.log(result);
+        var response = {
+          result: '1',
+          data: result
+        }
+        responseJSON(res,response)
+      });
+    }
+
+    /*接口：
+      查询工作信息
     */
     if(param.action == 'find_work'){
       connection.query(userSQL.getWorkInfo,null,(err,result) => {
+        console.log(result);
+        var response = {
+          result: '1',
+          data: result
+        }
+        responseJSON(res,response)
+      });
+    }
+
+    /*接口：
+      修改工作信息
+    */
+    if(param.action == 'set_work'){
+      connection.query(userSQL.setWorkInfo,[param.work,param.id],(err,result) => {
+        console.log(result);
+        var response = {
+          result: '1',
+          data: result
+        }
+        responseJSON(res,response)
+      });
+    }
+
+    /*接口：
+      查询员工信息
+    */
+    if(param.action == 'find_name'){
+      connection.query(userSQL.getUserInfo,null,(err,result) => {
+        console.log(result);
+        var response = {
+          result: '1',
+          data: result
+        }
+        responseJSON(res,response)
+      });
+    }
+
+    /*接口：
+      修改员工信息
+    */
+    if(param.action == 'set_name'){
+      connection.query(userSQL.setUserInfo,[param.name,param.id],(err,result) => {
         console.log(result);
         var response = {
           result: '1',
