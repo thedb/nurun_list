@@ -1,3 +1,4 @@
+var webpack = require('webpack')
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
@@ -28,7 +29,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|vue)$/,
+        test: /\.(vue)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
         include: [resolve('src'), resolve('test')],
@@ -63,5 +64,12 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      EXIF:"exif-js",
+      $:'jquery',
+      jQuery:'jquery',
+    })
+  ]
 }

@@ -76,9 +76,14 @@ export default {
         }
       })
       .then((res) => {
-        let result = res.data
-        console.log(result)
-        // this.userInfo = result.data
+        // let result = res.data
+        if (parseInt(res.data.result) === 1) {
+          alert('分配成功')
+        } else {
+          console.log(res.data)
+        }
+      }).catch(e => {
+        console.log(e)
       })
     }
   }

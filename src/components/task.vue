@@ -1,13 +1,18 @@
 <template>
   <div class="front_task">
-    <h1 v-html="msg"></h1>
+    <h1>front-end<br>工作分配</h1>
+    <p v-show="hasNoWork">
+      目前空闲：{{hasNoWork.length == 0 ? '无' : hasNoWork}}
+    </p>
     <div class="Container">
       <div class="listHead">
+        <span class="headImage">头像</span>
         <span>姓名</span>
         <span v-for="(v,k) in workInfo" v-html="workInfo[k].work"></span>
       </div>
       <div class="listContainer">
         <div class="listContent" v-for="(v,k) in userInfo">
+          <span class="headImage"><img style="width:100%" :src="userInfo[k].head_img" alt="" /></span>
           <span v-html="userInfo[k].name"></span>
           <span v-for="(val,key) in showLiST(v.work,workInfo)" :class="{hasWork:val}" >{{ }}</span>
         </div>
@@ -21,9 +26,9 @@ export default {
   name: 'front_task',
   data () {
     return {
-      msg: 'front-end<br>工作分配',
       userInfo: false,
-      workInfo: false
+      workInfo: false,
+      hasNoWork: false
     }
   },
   created () {
@@ -40,8 +45,8 @@ export default {
       })
       .then((res) => {
         let result = res.data
-        // console.log(result)
         this.userInfo = result.data
+        this.hasNoWork = result.other
         resolve()
       })
     })
@@ -72,12 +77,6 @@ export default {
             return true
           }
         }
-        // return _work.forEach((ele) => {
-        //   if (val.work === ele) {
-        //     console.log(ele)
-        //     return true
-        //   }
-        // })
       })
     }
   }
@@ -92,6 +91,18 @@ export default {
   flex-direction:row;
   justify-content:center;
   margin-bottom: 50px;
+  span{
+    display:inline-block;
+    width:120px;
+    height:40px;
+    font-size: 20px;
+    line-height: 40px;
+    border:1px solid #ddd;
+  }
+  .headImage{
+    height: 120px;
+    line-height: 120px;
+  }
 }
 .listHead{
   display: flex;
@@ -108,14 +119,7 @@ export default {
 .hasWork{
   background:red;
 }
-span{
-  display:inline-block;
-  width:120px;
-  height:40px;
-  font-size: 20px;
-  line-height: 40px;
-  border:1px solid #ddd;
-}
+
 h1, h2 {
   font-weight: normal;
 }

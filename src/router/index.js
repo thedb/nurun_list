@@ -4,6 +4,7 @@ import task from '@/components/task'
 import addTask from '@/components/addTask'
 import employeeInfo from '@/components/employeeInfo'
 import workInfo from '@/components/workInfo'
+import uploadImg from '@/components/uploadImg'
 import info1 from '@/components/info1'
 import info2 from '@/components/info2'
 
@@ -15,6 +16,11 @@ export default new Router({
       path: '/',
       name: 'task',
       component: task
+    },
+    {
+      path: '/uploadImg',
+      name: 'uploadImg',
+      component: uploadImg
     },
     {
       path: '/addTask',

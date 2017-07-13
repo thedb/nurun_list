@@ -1,11 +1,12 @@
 <template>
   <div id="app">
     <div class="loading" v-show="loading"><span>loading..</span></div>
-    <img src="./assets/logo.png"><br>
+    <img style="width:12%" src="./assets/logo.png"><br>
     <router-link to="/">首页</router-link>
     <router-link to="/employeeInfo">员工信息</router-link>
     <router-link to="/workInfo">工作信息</router-link>
     <router-link to="/addTask">工作分配</router-link>
+    <router-link to="/uploadImg">上传头像</router-link>
     <transition name="ani" mode="out-in">
       <router-view></router-view>
     </transition>
@@ -24,6 +25,7 @@ export default {
 
   },
   created () {
+    // console.log($('.loading'))
   }
 }
 </script>

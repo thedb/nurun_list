@@ -10,12 +10,18 @@
         <span>工作</span>
         <input v-for="(v,k) in workInfo" v-model="workInfo[k].work">
       </div>
+      <div class="del" v-show="change">
+        <span>删除</span>
+        <span v-for="(v,k) in workInfo" @click="deleteWork(workInfo[k].id)">x</span>
+      </div>
       <div class="confirm" v-show="change">
         <span>修改</span>
-        <span v-for="(v,k) in workInfo" @click="submintWork(workInfo[k].work, workInfo[k].id)">确认</span>
+        <span v-for="(v,k) in workInfo" @click="changeWork(workInfo[k].work, workInfo[k].id)">确认</span>
       </div>
     </div>
-    <button @click="change = !change" v-show="!change">修改工作信息</button>
+    <button @click="change = !change" v-show="!change">修改工作信息</button><br>
+    <input type="text" name="work" value="" placeholder="新增工作" v-model="newWork">
+    <button @click="addWork">确认新增</button>
   </div>
 </template>
 
@@ -26,28 +32,58 @@ export default {
     return {
       msg: 'front-end<br>工作信息',
       workInfo: false,
-      change: false
+      change: false,
+      newWork: ''
     }
   },
   created () {
-    this.$axios({
-      method: 'post',
-      url: '/api',
-      data: {
-        'action': 'find_work'
-      }
-    })
-    .then((res) => {
-      let result = res.data
-      console.log(result)
-      this.workInfo = result.data
-    })
-    .then(() => {
-      this.$parent.loading = false
-    })
+    this.getWork()
   },
   methods: {
-    submintWork (val, key) {
+    addWork () {
+      this.$parent.loading = true
+      this.$axios({
+        method: 'post',
+        url: '/api',
+        data: {
+          'action': 'add_work',
+          'work': this.newWork
+        }
+      })
+      .then((res) => {
+        if (parseInt(res.data.result) === 1) {
+          alert('添加成功')
+          this.getWork()
+        } else {
+          console.log(res.data)
+        }
+      }).catch((e) => {
+        console.log(e)
+      })
+    },
+    deleteWork (key) {
+      this.$parent.loading = true
+      this.$axios({
+        method: 'post',
+        url: '/api',
+        data: {
+          'action': 'delete_work',
+          'id': key
+        }
+      })
+      .then((res) => {
+        if (parseInt(res.data.result) === 1) {
+          alert('删除成功')
+          this.getWork()
+        } else {
+          console.log(res.data)
+        }
+      }).catch((e) => {
+        console.log(e)
+      })
+    },
+    changeWork (val, key) {
+      this.$parent.loading = true
       this.$axios({
         method: 'post',
         url: '/api',
@@ -58,8 +94,29 @@ export default {
         }
       })
       .then((res) => {
+        if (parseInt(res.data.result) === 1) {
+          alert('修改成功')
+          this.getWork()
+        } else {
+          console.log(res.data)
+        }
+      }).catch((e) => {
+        console.log(e)
+      })
+    },
+    getWork () {
+      this.$axios({
+        method: 'post',
+        url: '/api',
+        data: {
+          'action': 'find_work'
+        }
+      }).then((res) => {
         let result = res.data
         console.log(result)
+        this.workInfo = result.data
+      }).then(() => {
+        this.$parent.loading = false
       })
     }
   }
@@ -79,7 +136,7 @@ export default {
     line-height: 40px;
     border: 2px solid #ddd;
   }
-  .listContainer,.changeContainer,.confirm{
+  .listContainer,.changeContainer,.confirm,.del{
     display: flex;
     flex-direction:column;
   }
@@ -90,6 +147,10 @@ export default {
     line-height: 40px;
     border-width: 1px;
   }
+}
+button{
+  margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 </style>

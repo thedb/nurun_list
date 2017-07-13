@@ -4,6 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import commonJS from './assets/commonJS'
+import $ from "jquery"
+import Hammer from './assets/hammer.min.js'
+import ImageEditor from './assets/ImageEditor.js'
+
 
 Vue.config.productionTip = false
 Vue.use(commonJS)
